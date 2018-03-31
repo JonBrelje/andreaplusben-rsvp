@@ -1,4 +1,5 @@
-from flask import Flask, render_template, request
+from flask import Flask, flash, render_template, redirect, request, url_for
+from flask_login import current_user, LoginManager, login_required, login_user
 from flask_sqlalchemy import SQLAlchemy
 import os
 
@@ -7,13 +8,54 @@ app = Flask(__name__)
 app.config.from_object(os.environ['APP_SETTINGS'])
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
+login = LoginManager(app)
 
-from models import Guest3
-
+from forms import LoginForm, RegistrationForm
+from models import Guest3, User
 
 @app.route('/')
-def hello():
-    return render_template('home.html')
+@app.route('/index')
+def index():
+    return render_template('index.html')
+
+
+# Courtesy of Flask Mega-Tutorial
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if current_user.is_authenticated:
+        return redirect(url_for('index'))
+
+    form = LoginForm()
+    if form.validate_on_submit():
+        user = User.query.filter_by(username=form.username.data).first()
+        if user is None or not user.check_password(form.password.data):
+            flash('Invalid username or password')
+            return redirect(url_for('login'))
+        login_user(user, remember=form.remember_me.data)
+        next_page = request.args.get('next')
+        if not next_page or url_parse(next_page).netloc != '':
+            next_page = url_for('index')
+        return redirect(next_page)
+    return render_template('login.html', title='Sign In', form=form)
+
+
+
+# Courtesy of Flask Mega-Tutorial
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    if not current_user.is_authenticated:# or current_user.username != "jonathan.brelje":
+        return redirect(url_for('index'))
+    form = RegistrationForm()
+    if form.validate_on_submit():
+        user = User(username=form.username.data)
+        user.set_password(form.password.data)
+        db.session.add(user)
+        db.session.commit()
+        flash('Congratulations, you are now a registered user!')
+        return redirect(url_for('login'))
+    return render_template('register.html', title='Register', form=form)
+
+
 
 @app.route('/rsvp', methods=['GET'])
 def rsvp_get():
@@ -36,6 +78,8 @@ def rsvp_get():
 
 	return render_template('rsvp.html', party = group, rehearsal = rehearsal, welcome = welcome)
 
+
+
 @app.route('/rsvp', methods=['POST'])
 def rsvp_post():
 	i = 1
@@ -57,11 +101,11 @@ def rsvp_post():
 	return render_template('saved.html')
 
 
-
 @app.route("/gueststatus", methods=['GET'])
+@login_required
 def get_guest_status():
-   guests = Guest3.query.filter_by().order_by(Guest3.party.asc(), Guest3.id.asc())
-   return render_template('gueststatus.html', guests=guests)
+	guests = Guest3.query.filter_by().order_by(Guest3.party.asc(), Guest3.id.asc())
+	return render_template('gueststatus.html', guests=guests)
      
 
 
