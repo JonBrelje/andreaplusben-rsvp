@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<style>
+  td, th {
+    border: solid 1px black;
+  }
+</style>
+<html>
+  <head>
+    <title>Guests Status</title>
+  </head>
+  <body>
+    <form action="/rsvp" method="POST">
+      {% for guest in party %}
+        <input type=hidden id="id{{ loop.index }}" name="id{{ loop.index }}" value={{ guest.id }}>
+      {% endfor %}
+      {% if rehearsal %}
+        <h3>Rehearsal Dinner</h3>
+        {% for guest in party %}
+          {% if guest.rehearsalInvite == 1 %}
+            <br>
+              {{ guest.name }} will be
+              <select id="rehearsalRSVPStatus{{ guest.id }}" name="rehearsalRSVPStatus{{ guest.id }}">
+                {% if not guest.rehearsalRSVPStatus %}
+                  <option value="None" selected disabled hidden> Choose here </option>
+                {% endif %}
+                {% if guest.rehearsalRSVPStatus == "attending" %}
+                  <option value="attending" selected>attending</option>
+                {% else %}
+                  <option value="attending">attending</option>
+                {% endif %}
+                {% if guest.rehearsalRSVPStatus == "not attending" %}
+                  <option value="not attending" selected>not attending</option>
+                {% else %}
+                  <option value="not attending">not attending</option>
+                {% endif %}
+              </select>
+              the rehearsal dinner and chooses the
+              <select id="rehearsalFoodChoice{{ guest.id }}" name="rehearsalFoodChoice{{ guest.id }}">
+                {% if not guest.rehearsalFoodChoice %}
+                  <option value="None" selected disabled hidden> Choose here </option>
+                {% endif %}
+                {% if guest.rehearsalFoodChoice == "beef" %}
+                  <option value="beef" selected>beef</option>
+                {% else %}
+                  <option value="beef">beef</option>
+                {% endif %}
+                {% if guest.rehearsalFoodChoice == "vegetarian" %}
+                  <option value="vegetarian" selected>vegetarian</option>
+                {% else %}
+                  <option value="vegetarian">vegetarian</option>
+                {% endif %}
+              </select>
+              food option.
+            </br>
+          {% endif %}
+        {% endfor %}
+      {% endif %}
+      {% if welcome %}
+        <h3>Welcome Reception</h3>
+        {% for guest in party %}
+          {% if guest.welcomeReceptionInvite == 1 %}
+            <br>
+              {{ guest.name }} will be
+              <select id="welcomeReceptionRSVPStatus{{ guest.id }}" name="welcomeReceptionRSVPStatus{{ guest.id }}">
+                {% if not guest.welcomeReceptionRSVPStatus %}
+                  <option value="None" selected disabled hidden> Choose here </option>
+                {% endif %}
+                {% if guest.welcomeReceptionRSVPStatus == "attending" %}
+                  <option value="attending" selected>attending</option>
+                {% else %}
+                  <option value="attending">attending</option>
+                {% endif %}
+                {% if guest.welcomeReceptionRSVPStatus == "not attending" %}
+                  <option value="not attending" selected>not attending</option>
+                {% else %}
+                  <option value="not attending">not attending</option>
+                {% endif %}
+              </select>
+              the welcome reception.
+            </br>
+          {% endif %}
+        {% endfor %}
+      {% endif %}
+
+
+      <h3>Wedding Reception</h3>
+      {% for guest in party %}
+        <br>
+          {{ guest.name }} will be
+          <select id="receptionRSVPStatus{{ guest.id }}" name="receptionRSVPStatus{{ guest.id }}">
+            {% if not guest.receptionRSVPStatus %}
+              <option value="None" selected disabled hidden> Choose here </option>
+            {% endif %}
+            {% if guest.receptionRSVPStatus == "attending" %}
+              <option value="attending" selected>attending</option>
+            {% else %}
+              <option value="attending">attending</option>
+            {% endif %}
+            {% if guest.welcomeeceptionRSVPStatus == "not attending" %}
+              <option value="not attending" selected>not attending</option>
+            {% else %}
+              <option value="not attending">not attending</option>
+            {% endif %}
+          </select>
+          the wedding reception and choose the             
+        <select id="receptionFoodChoice{{ guest.id }}" name="receptionFoodChoice{{ guest.id }}">
+              {% if not guest.receptionFoodChoice %}
+                <option value="None" selected disabled hidden> Choose here </option>
+              {% endif %}
+              {% if guest.receptionFoodChoice == "chicken" %}
+                <option value="chicken" selected>chicken</option>
+              {% else %}
+                <option value="chicken">chicken</option>
+              {% endif %}
+              {% if guest.receptionFoodChoice == "fish" %}
+                <option value="fish" selected>fish</option>
+              {% else %}
+                <option value="fish">fish</option>
+              {% endif %}
+            </select>
+            food option.
+          </br>
+      {% endfor %}
+
+      <h3>Final Thoughts</h3>
+      <br>- Please let us know about any dietary observations</br>
+      <br>- Our engagement is also a time of spiritual preparation for us. If there are any intentions for which we can pray (for you), let us know!</br>
+      {% if party[0].comment %}
+        <textarea id="comment{{party[0].id}}" Name="comment{{party[0].id}}">{{ party[0].comment }}</textarea>
+      {% else %}
+        <textarea id="comment{{party[0].id}}" Name="comment{{party[0].id}}"></textarea>
+      {% endif %}
+      
+      <br>
+        <input type="submit">
+      </br>
+    
+    </form>
+    <br><br>
+</html>
