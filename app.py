@@ -43,8 +43,8 @@ def login():
 # Courtesy of Flask Mega-Tutorial
 @app.route('/register', methods=['GET', 'POST'])
 def register():
-    if not current_user.is_authenticated:# or current_user.username != "jonathan.brelje":
-        return redirect(url_for('index'))
+    # if not current_user.is_authenticated or current_user.username != "jonathan.brelje":
+    #    return redirect(url_for('index'))
     form = RegistrationForm()
     if form.validate_on_submit():
         user = User(username=form.username.data)
