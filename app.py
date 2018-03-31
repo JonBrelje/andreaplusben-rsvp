@@ -23,7 +23,7 @@ def rsvp_get():
 		# Guest name doesn't exist, render try again page
 		return render_template('guest_not_found.html')
 
-	group = Guest3.query.filter_by(party = headOfParty.party)
+	group = Guest3.query.filter_by(party = headOfParty.party).order_by(Guest3.id.asc())
 
 	rehearsal = False
 	for guest in group:
@@ -60,7 +60,7 @@ def rsvp_post():
 
 @app.route("/gueststatus", methods=['GET'])
 def get_guest_status():
-   guests = Guest3.query.filter_by()
+   guests = Guest3.query.filter_by().order_by(Guest3.party.asc(), Guest3.id.asc())
    return render_template('gueststatus.html', guests=guests)
      
 
