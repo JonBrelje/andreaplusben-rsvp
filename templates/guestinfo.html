@@ -1,0 +1,124 @@
+{% extends "base.html" %}
+
+{% block head %}
+  {{ super() }}
+  <style>
+    .guest-info-card {
+      margin-left: auto;
+      margin-right: auto;
+      margin-top: 20px;
+      margin-bottom: 20px;
+
+      text-align: left;
+
+      width: 70%;
+      min-width: 300px;
+    }
+
+    .guest-info-card__title {
+      background-color: var(--primary-color);
+      color: var(--text-on-primary)
+    }
+
+    .guest-info-table {
+      margin: auto;
+      width: 75%;
+    }
+
+    .guest-info-table__value {
+      text-align: left !important;
+      white-space: nowrap;
+      word-wrap: break-word;
+    }
+
+  </style>
+  <script>
+    $("textarea").each(function(textarea) {
+        $this.height( $this[0].scrollHeight );
+    });  
+  </script>
+{% endblock head %}
+
+{% block header %}
+    {{ super() }}
+{% endblock header %}
+
+{% block title %}
+Guest Info
+{% endblock title %}
+
+{% block content %}
+  <div class="mdl-card guest-info-card mdl-shadow--2dp">
+    <div class="mdl-card__title guest-info-card__title">
+      <h3 class="mdl-card__title-text"t>
+        {{ guest.name }}
+      </h3>
+    </div>
+    <div class="mdl-card__supporting-text">
+      <table class="mdl-data-table mdl-js-data-table guest-info-table">
+        <thead>
+          <tr>
+            <th class="mdl-data-table__cell--non-numeric">Field</th>
+            <th class="mdl-data-table__cell--non-numeric">Value</th>
+          <tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="mdl-data-table__cell--non-numeric">Guest ID</td>
+            <td class="guest-info-table__value">{{ guest.id }}</td>
+          </tr>
+          <tr>
+            <td class="mdl-data-table__cell--non-numeric guest-info-table__field">Code</td>
+            <td class="mdl-data-table__cell--non-numeric guest-info-table__value">{{ guest.code }}</td>
+          </tr>
+          <tr>
+            <td class="mdl-data-table__cell--non-numeric guest-info-table__field">Party ID</td>
+            <td class="guest-info-table__value">{{ guest.party }}</td>
+          </tr>
+          <tr>
+            <td class="mdl-data-table__cell--non-numeric guest-info-table__field">Guest Name</td>
+            <td class="mdl-data-table__cell--non-numeric guest-info-table__value">{{ guest.name }}</td>
+          </tr>
+          <tr>
+            <td class="mdl-data-table__cell--non-numeric guest-info-table__field">Rehearsal Dinner Invite</td>
+            <td class="guest-info-table__value"> {{ guest.rehearsalInvite }}</td>
+          </tr>
+          <tr>
+            <td class="mdl-data-table__cell--non-numeric guest-info-table__field">Welcome Reception Invite</td>
+            <td class="guest-info-table__value">{{ guest.welcomeReceptionInvite }}</td>
+          </tr>
+          <tr>
+            <td class="mdl-data-table__cell--non-numeric guest-info-table__field">Sunday Brunch Invite</td>
+            <td class="guest-info-table__value">{{ guest.brunchInvite }}</td>
+          </tr>
+          <tr>
+            <td class="mdl-data-table__cell--non-numeric guest-info-table__field">Rehearsal Dinner RSVP Status</td>
+            <td class="mdl-data-table__cell--non-numeric guest-info-table__value">{{ guest.rehearsalRSVPStatus }}</td>
+          </tr>
+          <tr>
+            <td class="mdl-data-table__cell--non-numeric guest-info-table__field">Welcome Reception RSVP Status</td>
+            <td class="mdl-data-table__cell--non-numeric guest-info-table__value">{{ guest.welcomeReceptionRSVPStatus }}</td>
+          </tr>
+          <tr>
+            <td class="mdl-data-table__cell--non-numeric guest-info-table__field">Wedding Reception RSVP Status</td>
+            <td class="mdl-data-table__cell--non-numeric guest-info-table__value">{{ guest.receptionRSVPStatus }}</td>
+          </tr>
+          <tr>
+            <td class="mdl-data-table__cell--non-numeric guest-info-table__field">Sunday Brunch RSVP Status</td>
+            <td class="mdl-data-table__cell--non-numeric guest-info-table__value">{{ guest.brunchRSVPStatus }}</td>
+          </tr>
+          <tr>
+            <td class="mdl-data-table__cell--non-numeric guest-info-table__field">Comments</td>
+            <td class="mdl-data-table__cell--non-numeric guest-info-table__value">
+              <textarea class="mdl-textfield__input" rows="5" disabled>{{ guest.comment }}</textarea>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+{% endblock content %}
+
+{% block footer %}
+    {{ super() }}
+{% endblock footer %}

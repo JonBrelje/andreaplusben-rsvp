@@ -18,7 +18,16 @@
     .rsvp-card__title {
       background-color: var(--primary-color);
       color: var(--text-on-primary)
-    }   
+    }
+
+    .mdl-textfield {
+      width: 100%;
+    }
+
+    .mdl-button--colored  {
+      background-color: var(--primary-color) !important;
+      margin : 30px;
+    }
 
   </style>
 {% endblock head %}
@@ -32,7 +41,7 @@
     {% for guest in party %}
       <input type=hidden id="id{{ loop.index }}" name="id{{ loop.index }}" value={{ guest.id }}>
     {% endfor %}
-    {% if rehearsal %}
+    {% if rehearsal["invited"] %}
       <div class="mdl-card rsvp-card mdl-shadow--2dp">
         <div class="mdl-card__title rsvp-card__title">
           <h3 class="mdl-card__title-text rsvp-card__title-text"t>
@@ -45,43 +54,21 @@
               {% if guest.rehearsalInvite == 1 %}
                   <li class="mdl-list__item rsvp-card__guest-list__item">
                   <span>
-                    {{ guest.name }} will be
+                    {{ guest.name }} asdfasdfasdf
                     <select id="rehearsalRSVPStatus{{ guest.id }}" name="rehearsalRSVPStatus{{ guest.id }}" required>
                       {% if not guest.rehearsalRSVPStatus %}
                         <option value="" selected disabled hidden> Choose here </option>
                       {% else %}
                           <option value="" disabled hidden> Choose here </option>
                       {% endif %}
-                      {% if guest.rehearsalRSVPStatus == "attending" %}
-                        <option value="attending" selected>attending</option>
-                      {% else %}
-                        <option value="attending">attending</option>
-                      {% endif %}
-                      {% if guest.rehearsalRSVPStatus == "not attending" %}
-                        <option value="not attending" selected>not attending</option>
-                      {% else %}
-                        <option value="not attending">not attending</option>
-                      {% endif %}
+                      {% for response in rehearsal["choices"] %}
+                        {% if guest.rehearsalRSVPStatus == response.response %}
+                          <option value="{{ response.response }}" selected>{{ response.response }}</option>
+                        {% else %}
+                          <option value="{{ response.response }}">{{ response.response }}</option>
+                        {% endif %}
+                      {% endfor %}
                     </select>
-                    the rehearsal dinner and chooses the
-                    <select id="rehearsalFoodChoice{{ guest.id }}" name="rehearsalFoodChoice{{ guest.id }}" required>
-                      {% if not guest.rehearsalFoodChoice %}
-                        <option value="" selected disabled hidden> Choose here </option>
-                      {% else %}
-                        <option value="" disabled hidden> Choose here </option>
-                      {% endif %}
-                      {% if guest.rehearsalFoodChoice == "beef" %}
-                        <option value="beef" selected>beef</option>
-                      {% else %}
-                        <option value="beef">beef</option>
-                      {% endif %}
-                      {% if guest.rehearsalFoodChoice == "vegetarian" %}
-                        <option value="vegetarian" selected>vegetarian</option>
-                      {% else %}
-                        <option value="vegetarian">vegetarian</option>
-                      {% endif %}
-                    </select>
-                    food option.
                   </span>
                 </li>
               {% endif %}
@@ -90,7 +77,8 @@
         </div>
       </div>
     {% endif %}
-    {% if welcome %}
+
+    {% if welcome["invited"] %}
       <div class="mdl-card rsvp-card mdl-shadow--2dp">
         <div class="mdl-card__title rsvp-card__title">
           <h3 class="mdl-card__title-text rsvp-card__title-text"t>
@@ -110,18 +98,14 @@
                       {% else %}
                         <option value="" disabled hidden> Choose here </option>
                       {% endif %}
-                      {% if guest.welcomeReceptionRSVPStatus == "attending" %}
-                        <option value="attending" selected>attending</option>
-                      {% else %}
-                        <option value="attending">attending</option>
-                      {% endif %}
-                      {% if guest.welcomeReceptionRSVPStatus == "not attending" %}
-                        <option value="not attending" selected>not attending</option>
-                      {% else %}
-                        <option value="not attending">not attending</option>
-                      {% endif %}
+                      {% for response in welcome["choices"] %}
+                        {% if guest.welcomeReceptionRSVPStatus == response.response %}
+                          <option value="{{ response.response }}" selected>{{ response.response }}</option>
+                        {% else %}
+                          <option value="{{ response.response }}">{{ response.response }}</option>
+                        {% endif %}
+                      {% endfor %}
                     </select>
-                    the welcome reception.
                   </span>
                 </li>
               {% endif %}
@@ -134,7 +118,7 @@
     <div class="mdl-card rsvp-card mdl-shadow--2dp">
       <div class="mdl-card__title rsvp-card__title">
         <h3 class="mdl-card__title-text rsvp-card__title-text"t>
-            Reception
+            Wedding Reception
         </h3>
       </div>
       <div class="mdl-card__supporting-text">
@@ -149,42 +133,57 @@
                   {% else %}
                     <option value="" disabled hidden> Choose here </option>
                   {% endif %}
-                  {% if guest.receptionRSVPStatus == "attending" %}
-                    <option value="attending" selected>attending</option>
-                  {% else %}
-                    <option value="attending">attending</option>
-                  {% endif %}
-                  {% if guest.receptionRSVPStatus == "not attending" %}
-                    <option value="not attending" selected>not attending</option>
-                  {% else %}
-                    <option value="not attending">not attending</option>
-                  {% endif %}
+                  {% for response in reception["choices"] %}
+                    {% if guest.receptionRSVPStatus == response.response %}
+                      <option value="{{ response.response }}" selected>{{ response.response }}</option>
+                    {% else %}
+                      <option value="{{ response.response }}">{{ response.response }}</option>
+                    {% endif %}
+                  {% endfor %}
                 </select>
-                the wedding reception and choose the             
-                <select id="receptionFoodChoice{{ guest.id }}" name="receptionFoodChoice{{ guest.id }}" required>
-                  {% if not guest.receptionFoodChoice %}
-                    <option value="" selected disabled hidden> Choose here </option>
-                  {% else %}
-                    <option value="" disabled hidden> Choose here </option>
-                  {% endif %}
-                  {% if guest.receptionFoodChoice == "chicken" %}
-                    <option value="chicken" selected>chicken</option>
-                  {% else %}
-                    <option value="chicken">chicken</option>
-                  {% endif %}
-                  {% if guest.receptionFoodChoice == "fish" %}
-                    <option value="fish" selected>fish</option>
-                  {% else %}
-                    <option value="fish">fish</option>
-                  {% endif %}
-                </select>
-                food option.
               </span>
             </li>
           {% endfor %}
         </ul>
       </div>
     </div>
+
+    {% if brunch["invited"] %}
+      <div class="mdl-card rsvp-card mdl-shadow--2dp">
+        <div class="mdl-card__title rsvp-card__title">
+          <h3 class="mdl-card__title-text rsvp-card__title-text"t>
+            Sunday Brunch
+          </h3>
+        </div>
+        <div class="mdl-card__supporting-text">
+          <ul class="mdl-list rsvp-card__guest-list">
+            {% for guest in party %}
+              {% if guest.brunchInvite == 1 %}
+                <li class="mdl-list__item rsvp-card__guest-list__item">
+                  <span>
+                    {{ guest.name }} will be
+                    <select id="brunchRSVPStatus{{ guest.id }}" name="brunchRSVPStatus{{ guest.id }}" required>
+                      {% if not guest.brunchRSVPStatus %}
+                        <option value="" selected disabled hidden> Choose here </option>
+                      {% else %}
+                        <option value="" disabled hidden> Choose here </option>
+                      {% endif %}
+                      {% for response in brunch["choices"] %}
+                        {% if guest.brunchRSVPStatus == response.response %}
+                          <option value="{{ response.response }}" selected>{{ response.response }}</option>
+                        {% else %}
+                          <option value="{{ response.response }}">{{ response.response }}</option>
+                        {% endif %}
+                      {% endfor %}
+                    </select>
+                  </span>
+                </li>
+              {% endif %}
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+    {% endif %}
 
     <div class="mdl-card rsvp-card mdl-shadow--2dp">
       <div class="mdl-card__title rsvp-card__title">
@@ -193,18 +192,26 @@
         </h3>
       </div>
       <div class="mdl-card__supporting-text rsvp-card__supporting-text">
-        <span>- Please let us know about any dietary observations</span>
-        <span>- Our engagement is also a time of spiritual preparation for us. If there are any intentions for which we can pray (for you), let us know!</span>
+        <span>Please let us know about any dietary observations.</span>
+        <br><br>
+        <span>Our engagement is also a time of spiritual preparation for us. If there are any intentions for which we can pray (for you), let us know!</span>
       </div>
       <div class="mdl-card__actions rsvp-card__actions">
-        {% if party[0].comment %}
-          <textarea id="comment{{party[0].id}}" Name="comment{{party[0].id}}">{{ party[0].comment }}</textarea>
-        {% else %}
-          <textarea id="comment{{party[0].id}}" Name="comment{{party[0].id}}"></textarea>
-        {% endif %}
+        <div class="mdl-textfield mdl-js-textfield">
+          {% if party[0].comment %}
+            <textarea id="comment{{party[0].id}}" name="comment{{party[0].id}}" class="mdl-textfield__input" rows="5">{{ party[0].comment }}</textarea>
+          {% else %}
+            <textarea id="comment{{party[0].id}}" name="comment{{party[0].id}}" class="mdl-textfield__input" rows="5"></textarea>
+            <label class="mdl-textfield__label" for="comment{{party[0].id}}">Enter text here...</label>
+          {% endif %}
+        </div>
       </div>
+  </div>
+
     <span>
-      <input type="submit">
+      <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored search-form__submit" type="submit">
+            Submit
+      </button>
     </span>
   </form>
 {% endblock content %}

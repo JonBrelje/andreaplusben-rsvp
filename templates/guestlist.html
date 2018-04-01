@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block head %}
+    {{ super() }}
+{% endblock head %}
+
+{% block header %}
+    {{ super() }}
+{% endblock header %}
+
+{% block title %}
+Guest List
+{% endblock title %}
+
+{% block content %}
+  <table class="mdl-data-table mdl-js-data-table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Party ID</th>
+        <th class="mdl-data-table__cell--non-numeric">Name</th>
+        <th>Rehearsal Invite</th>
+        <th>Welcome Invite</th>
+        <th>Brunch Invite</th>
+        <th class="mdl-data-table__cell--non-numeric">Rehearsal RSVP</th>
+        <th class="mdl-data-table__cell--non-numeric">Welcome Reception RSVP</th>
+        <th class="mdl-data-table__cell--non-numeric">Reception RSVP</th>
+        <th class="mdl-data-table__cell--non-numeric">Brunch RSVP</th>
+        <th class="mdl-data-table__cell--non-numeric">Comment</th>
+      <tr>
+    </thead>
+    <tbody>
+      {% for guest in guests %}
+        <tr onclick="window.location='{{ url_for('get_guest_info', guestid=guest.id) }}';">
+          <td>{{ guest.id }}</td>
+          <td>{{ guest.party }}</td>
+          <td class="mdl-data-table__cell--non-numeric">{{ guest.name }}</td>
+          <td>{{ guest.rehearsalInvite }}</td>
+          <td>{{ guest.welcomeReceptionInvite }}</td>
+          <td>{{ guest.brunchInvite }}</td>
+          <td class="mdl-data-table__cell--non-numeric">{{ guest.rehearsalRSVPStatus }}</td>
+          <td class="mdl-data-table__cell--non-numeric">{{ guest.welcomeReceptionRSVPStatus }}</td>
+          <td class="mdl-data-table__cell--non-numeric">{{ guest.receptionRSVPStatus }}</td>
+          <td class="mdl-data-table__cell--non-numeric">{{ guest.brunchRSVPStatus }}</td>
+          <td class="mdl-data-table__cell--non-numeric">{{ guest.comment }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <br><br>
+{% endblock content %}
+
+{% block footer %}
+    {{ super() }}
+{% endblock footer %}

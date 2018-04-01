@@ -12,7 +12,7 @@ db = SQLAlchemy(app)
 login = LoginManager(app)
 
 from forms import LoginForm, RegistrationForm
-from models import Guest3, User
+from models import Guest, RSVPChoice, User
 
 @app.route('/')
 @app.route('/index')
@@ -62,23 +62,35 @@ def register():
 @app.route('/rsvp', methods=['GET'])
 def rsvp_get():
 	name = request.args.get('name')
-	headOfParty = Guest3.query.filter_by(name = name).first()
+	headOfParty = Guest.query.filter(Guest.name.ilike(name)).first()
 	if not headOfParty:
 		# Guest name doesn't exist, render try again page
 		return render_template('guest_not_found.html')
 
-	group = Guest3.query.filter_by(party = headOfParty.party).order_by(Guest3.id.asc())
+	group = Guest.query.filter_by(party = headOfParty.party).order_by(Guest.id.asc())
 
-	rehearsal = False
+	rehearsal = { "invited" : False, "choices" : None }
+	rehearsal["choices"] = RSVPChoice.query.filter_by(event = "Rehearsal Dinner").order_by(RSVPChoice.id.asc())
 	for guest in group:
 		if guest.rehearsalInvite == 1:
-			rehearsal = True
-	welcome = False
+			rehearsal["invited"] = True
+	
+	welcome = { "invited" : False, "choices" : None }
+	welcome["choices"] = RSVPChoice.query.filter_by(event = "Welcome Reception").order_by(RSVPChoice.id.asc())
 	for guest in group:
 		if guest.welcomeReceptionInvite == 1:
-			welcome = True
+			welcome["invited"] = True
+	
+	reception = { "choices" : None }
+	reception["choices"] = RSVPChoice.query.filter_by(event = "Wedding Reception").order_by(RSVPChoice.id.asc())
 
-	return render_template('rsvp.html', party = group, rehearsal = rehearsal, welcome = welcome)
+	brunch = { "invited" : False, "choices" : None }
+	brunch["choices"] = RSVPChoice.query.filter_by(event = "Sunday Brunch").order_by(RSVPChoice.id.asc())
+	for guest in group:
+		if guest.brunchInvite == 1:
+			brunch["invited"] = True
+
+	return render_template('rsvp.html', party = group, rehearsal = rehearsal, welcome = welcome, reception = reception, brunch = brunch, )
 
 
 
@@ -87,14 +99,14 @@ def rsvp_post():
 	i = 1
 	while request.form.get("id"+str(i)):
 		id = request.form.get("id"+str(i))
-		guest = Guest3.query.filter_by(id = id).first()
+		guest = Guest.query.filter_by(id = id).first()
 		if guest.rehearsalInvite:
 			guest.rehearsalRSVPStatus = request.form.get("rehearsalRSVPStatus" + str(id))
-			guest.rehearsalFoodChoice = request.form.get("rehearsalFoodChoice" + str(id))
 		if guest.welcomeReceptionInvite:
 			guest.welcomeReceptionRSVPStatus = request.form.get("welcomeReceptionRSVPStatus" + str(id))
+		if guest.brunchInvite:
+			guest.brunchRSVPStatus = request.form.get("brunchRSVPStatus" + str(id))
 		guest.receptionRSVPStatus = request.form.get("receptionRSVPStatus" + str(id))
-		guest.receptionFoodChoice = request.form.get("receptionFoodChoice" + str(id))
 
 		if request.form.get("comment" + str(id)):
 			guest.comment = request.form.get("comment" + str(id))
@@ -102,7 +114,7 @@ def rsvp_post():
 		i += 1
 	
 	id = request.form.get("id"+str(1))
-	guest = Guest3.query.filter_by(id = id).first()
+	guest = Guest.query.filter_by(id = id).first()
 	returnQueryStringDict = { 'name' : guest.name }
 	returnQueryString = urllib.parse.urlencode(returnQueryStringDict)
 
@@ -112,9 +124,15 @@ def rsvp_post():
 
 @app.route("/gueststatus", methods=['GET'])
 @login_required
-def get_guest_status():
-	guests = Guest3.query.filter_by().order_by(Guest3.party.asc(), Guest3.id.asc())
-	return render_template('gueststatus.html', guests=guests)
+def get_guest_list():
+	guests = Guest.query.filter_by().order_by(Guest.party.asc(), Guest.id.asc())
+	return render_template('guestlist.html', guests=guests)
+
+@app.route("/gueststatus/<guestid>", methods=['GET'])
+@login_required
+def get_guest_info(guestid):
+	guest = Guest.query.filter_by(id = guestid).first()
+	return render_template('guestinfo.html', guest = guest)
      
 
 
