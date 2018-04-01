@@ -54,7 +54,7 @@
               {% if guest.rehearsalInvite == 1 %}
                   <li class="mdl-list__item rsvp-card__guest-list__item">
                   <span>
-                    {{ guest.name }} asdfasdfasdf
+                    {{ guest.name }} : 
                     <select id="rehearsalRSVPStatus{{ guest.id }}" name="rehearsalRSVPStatus{{ guest.id }}" required>
                       {% if not guest.rehearsalRSVPStatus %}
                         <option value="" selected disabled hidden> Choose here </option>
@@ -91,7 +91,7 @@
               {% if guest.welcomeReceptionInvite == 1 %}
                 <li class="mdl-list__item rsvp-card__guest-list__item">
                   <span>
-                    {{ guest.name }} will be
+                    {{ guest.name }} : 
                     <select id="welcomeReceptionRSVPStatus{{ guest.id }}" name="welcomeReceptionRSVPStatus{{ guest.id }}" required>
                       {% if not guest.welcomeReceptionRSVPStatus %}
                         <option value="" selected disabled hidden> Choose here </option>
@@ -126,7 +126,7 @@
           {% for guest in party %}
             <li class="mdl-list__item rsvp-card__guest-list__item">
               <span>
-                {{ guest.name }} will be
+                {{ guest.name }} : 
                 <select id="receptionRSVPStatus{{ guest.id }}" name="receptionRSVPStatus{{ guest.id }}" required>
                   {% if not guest.receptionRSVPStatus %}
                     <option value="" selected disabled hidden> Choose here </option>
@@ -161,7 +161,7 @@
               {% if guest.brunchInvite == 1 %}
                 <li class="mdl-list__item rsvp-card__guest-list__item">
                   <span>
-                    {{ guest.name }} will be
+                    {{ guest.name }} : 
                     <select id="brunchRSVPStatus{{ guest.id }}" name="brunchRSVPStatus{{ guest.id }}" required>
                       {% if not guest.brunchRSVPStatus %}
                         <option value="" selected disabled hidden> Choose here </option>
