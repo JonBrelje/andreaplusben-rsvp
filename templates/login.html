@@ -1,20 +1,83 @@
-<!DOCTYPE html>
-<!--Courtesy of Flask Mega-Tutorial -->
-<html>
-  <head>
-    <title>Login</title>
-  </head>
-    <form action="" method="post">
-        {{ form.hidden_tag() }}
-        <p>
-            {{ form.username.label }}<br>
-            {{ form.username(size=32) }}
-        </p>
-        <p>
-            {{ form.password.label }}<br>
-            {{ form.password(size=32) }}
-        </p>
-        <p>{{ form.remember_me() }} {{ form.remember_me.label }}</p>
-        <p>{{ form.submit() }}</p>
-    </form>
-</html>
+{% extends "base.html" %}
+
+{% block head %}
+    {{ super() }}
+    <style>
+      .search-card-wide.mdl-card {
+        background-color: var(--bg-color-light);
+
+        max-height: 450px;
+        width: 512px;
+
+        position: absolute;
+
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+
+        margin: auto;
+      }
+      .search-card-wide > .mdl-card__title {
+        color: #fff;
+        height: 300px;
+        background: url({{ url_for('static', filename = 'img/withjoyimg5.jpeg') }}) center / cover;
+      }
+      .search-card-wide > .mdl-card__menu {
+        color: #fff;
+      }
+
+      .search-form__textfield {
+        margin: 10px;
+      }
+
+      .search-form__submit {
+        float: right;
+        margin: 10px;
+      }
+
+      .mdl-button--colored  {
+        background-color: var(--primary-color) !important;
+      }
+
+      .search-card__form {
+        float: bottom;
+      }
+    </style>
+{% endblock head %}
+
+{% block header %}
+    {{ super() }}
+{% endblock header %}
+
+{% block content %}
+  <div class="search-card search-card-wide mdl-card mdl-shadow--2dp">
+    <div class="mdl-card__title search-card__title">
+      <h2 class="mdl-card__title-text">Login</h2>
+    </div>
+
+    <div class="mdl-card__actions">
+        <form action="" method="post">
+            {{ form.hidden_tag() }}
+            <span>
+                <div class="mdl-textfield mdl-js-textfield search-form__textfield">
+                    {{ form.username.label(class="mdl-textfield__label") }}
+                    {{ form.username(size=32, class="mdl-textfield__input", type="text") }}
+                </div>
+            </span>
+            <span>
+                <div class="mdl-textfield mdl-js-textfield search-form__textfield">
+                    {{ form.password.label(class="mdl-textfield__label") }}
+                    {{ form.password(size=32, class="mdl-textfield__input", type="text") }}
+                </div>
+            </span>
+            <p>{{ form.remember_me() }} {{ form.remember_me.label }}</p>
+            <p>{{ form.submit() }}</p>
+        </form>
+    <div>
+  </div>
+{% endblock content %}
+
+{% block footer %}
+    {{ super() }}
+{% endblock footer %}

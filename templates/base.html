@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		{% block head %}
+			<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+			<link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
+			<script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+			<style>
+
+				:root {
+					--primary-color: #00274c;
+					--primary-color-light: #364f78;
+					--primary-color-dark: #000024;
+					--bg-color: #F5F5F6;
+					--bg-color-light: #ffffff;
+					--bg-color-dark: #E1E2E1;
+					--text-on-primary: #ffffff;
+
+					font-family: proxima-nova,Helvetica Neue,sans-serif !important;
+				}
+
+	      		.mdl-layout__header {
+	      			background-color: var(--primary-color);
+	      		}
+
+	      		.mdl-layout__content {
+	      			background-color: var(--bg-color);
+	      			text-align: center;
+	      		}
+		    </style>
+			<title>Welcome to Andrea and Ben's Wedding RSVP Site</title>
+		{% endblock %}
+	</head>
+	<body>
+		<div class="mdl-layout mdl-js-layout">
+			<header class="mdl-layout__header header"id ="header">
+	        	{% block header %}
+	        	{% endblock %}
+	    	</header>
+	    	<main class="mdl-layout__content">
+				<div id="content" class="content">
+					{% block content %}
+					{% endblock %}
+				</div>
+				<div id="footer" class="footer">
+		        	{% block footer %}
+		        	{% endblock %}
+		    	</div>
+		    </main>
+    	</div>
+	</body>
+</html>

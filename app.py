@@ -2,6 +2,7 @@ from flask import Flask, flash, render_template, redirect, request, url_for
 from flask_login import current_user, LoginManager, login_required, login_user
 from flask_sqlalchemy import SQLAlchemy
 import os
+import urllib.parse
 
 
 app = Flask(__name__)
@@ -42,6 +43,7 @@ def login():
 
 # Courtesy of Flask Mega-Tutorial
 @app.route('/register', methods=['GET', 'POST'])
+@login_required
 def register():
     if not current_user.is_authenticated or current_user.username != "jonathan.brelje":
         return redirect(url_for('index'))
@@ -98,7 +100,14 @@ def rsvp_post():
 			guest.comment = request.form.get("comment" + str(id))
 		db.session.commit()
 		i += 1
-	return render_template('saved.html')
+	
+	id = request.form.get("id"+str(1))
+	guest = Guest3.query.filter_by(id = id).first()
+	returnQueryStringDict = { 'name' : guest.name }
+	returnQueryString = urllib.parse.urlencode(returnQueryStringDict)
+
+	returnurl = url_for('rsvp_get') + "?" + returnQueryString
+	return render_template('confirmation.html', returnurl=returnurl)
 
 
 @app.route("/gueststatus", methods=['GET'])

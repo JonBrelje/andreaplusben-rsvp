@@ -1,16 +1,79 @@
-<!DOCTYPE html>
-<style>
-  td, th {
-    border: solid 1px black;
-  }
-</style>
-<html>
-  <head>
-    <title>Welcome to Andrea and Ben's Wedding RSVP Site</title>
-  </head>
-  <form action="rsvp" method="get">
-    <p> Please enter your party's name</p>
-    <input type="text" name="name"/>
-    <p><input type="submit" value="Search"/></p>
-  </form>
-</html>
+{% extends "base.html" %}
+
+{% block head %}
+    {{ super() }}
+    <style>
+      .search-card-wide.mdl-card {
+        background-color: var(--bg-color-light);
+
+        max-height: 450px;
+        width: 512px;
+
+        position: absolute;
+
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+
+        margin: auto;
+      }
+      .search-card-wide > .mdl-card__title {
+        color: #fff;
+        height: 300px;
+        background: url({{ url_for('static', filename = 'img/withjoyimg4reverse.jpeg') }}) center / cover;
+      }
+      .search-card-wide > .mdl-card__menu {
+        color: #fff;
+      }
+
+      .search-form__textfield {
+        margin: 10px;
+      }
+
+      .search-form__submit {
+        float: right;
+        margin: 10px;
+      }
+
+      .mdl-button--colored  {
+        background-color: var(--primary-color) !important;
+      }
+
+      .search-card__form {
+        float: bottom;
+      }
+    </style>
+{% endblock head %}
+
+{% block header %}
+    {{ super() }}
+{% endblock header %}
+
+{% block content %}
+  <div class="search-card search-card-wide mdl-card mdl-shadow--2dp">
+    <div class="mdl-card__title search-card__title">
+      <h2 class="mdl-card__title-text">Welcome</h2>
+    </div>
+    <div class="mdl-card__supporting-text search-card__supporting-text">
+      To RSVP, please begin by searching using your full name as it appears on your invitation.
+    </div>
+    <div class="mdl-card__actions">
+      <form action="rsvp" method="get" class="search-form search-card__form">
+        <span>
+          <div class="mdl-textfield mdl-js-textfield search-form__textfield">
+            <input class="mdl-textfield__input" type="text" id="name" name="name">
+            <label class="mdl-textfield__label" for="sample1">Text...</label>
+          </div>
+          <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored search-form__submit" type="submit">
+            Search
+          </button>
+        </span>
+      </form>
+    <div>
+  </div>
+{% endblock content %}
+
+{% block footer %}
+    {{ super() }}
+{% endblock footer %}

@@ -1,10 +1,16 @@
-<!DOCTYPE html>
+
 <!--Courtesy of Flask Mega-Tutorial -->
-<html>
-  <head>
-    <title>Login</title>
-  </head>
-  <body>
+{% extends "base.html" %}
+
+{% block head %}
+    {{ super() }}
+{% endblock head %}
+
+{% block header %}
+    {{ super() }}
+{% endblock header %}
+
+{% block content %}
     <h1>Register</h1>
     <form action="" method="post">
         {{ form.hidden_tag() }}
@@ -30,5 +36,9 @@
             {% endfor %}
         </p>
         <p>{{ form.submit() }}</p>
-    </body>
-</html>
+    </form>
+{% endblock content %}
+
+{% block footer %}
+    {{ super() }}
+{% endblock footer %}
