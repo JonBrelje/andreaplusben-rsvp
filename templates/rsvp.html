@@ -29,6 +29,11 @@
       margin : 30px;
     }
 
+    .rsvp-card__title-date {
+      margin-left: auto;
+      margin-right: 10;
+    }
+
   </style>
 {% endblock head %}
 
@@ -44,8 +49,11 @@
     {% if rehearsal["invited"] %}
       <div class="mdl-card rsvp-card mdl-shadow--2dp">
         <div class="mdl-card__title rsvp-card__title">
-          <h3 class="mdl-card__title-text rsvp-card__title-text"t>
+          <h3 class="mdl-card__title-text rsvp-card__title-text">
             Rehearsal Dinner
+          </h3>
+          <h3 class="mdl-card__title-text rsvp-card__title-date">
+            {{ rehearsal["choices"][0].date }}
           </h3>
         </div>
         <div class="mdl-card__supporting-text">
@@ -81,8 +89,11 @@
     {% if welcome["invited"] %}
       <div class="mdl-card rsvp-card mdl-shadow--2dp">
         <div class="mdl-card__title rsvp-card__title">
-          <h3 class="mdl-card__title-text rsvp-card__title-text"t>
+          <h3 class="mdl-card__title-text rsvp-card__title-text">
             Welcome Reception
+          </h3>
+          <h3 class="mdl-card__title-text rsvp-card__title-date">
+            {{ welcome["choices"][0].date }}
           </h3>
         </div>
         <div class="mdl-card__supporting-text">
@@ -117,8 +128,11 @@
 
     <div class="mdl-card rsvp-card mdl-shadow--2dp">
       <div class="mdl-card__title rsvp-card__title">
-        <h3 class="mdl-card__title-text rsvp-card__title-text"t>
+        <h3 class="mdl-card__title-text rsvp-card__title-text">
             Wedding Reception
+        </h3>
+        <h3 class="mdl-card__title-text rsvp-card__title-date">
+            {{ reception["choices"][0].date }}
         </h3>
       </div>
       <div class="mdl-card__supporting-text">
@@ -151,8 +165,11 @@
     {% if brunch["invited"] %}
       <div class="mdl-card rsvp-card mdl-shadow--2dp">
         <div class="mdl-card__title rsvp-card__title">
-          <h3 class="mdl-card__title-text rsvp-card__title-text"t>
+          <h3 class="mdl-card__title-text rsvp-card__title-text">
             Sunday Brunch
+          </h3>
+          <h3 class="mdl-card__title-text rsvp-card__title-date">
+            {{ brunch["choices"][0].date }}
           </h3>
         </div>
         <div class="mdl-card__supporting-text">
@@ -187,7 +204,7 @@
 
     <div class="mdl-card rsvp-card mdl-shadow--2dp">
       <div class="mdl-card__title rsvp-card__title">
-        <h3 class="mdl-card__title-text rsvp-card__title-text"t>
+        <h3 class="mdl-card__title-text rsvp-card__title-text">
             Final Thoughts
         </h3>
       </div>

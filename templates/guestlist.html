@@ -2,6 +2,12 @@
 
 {% block head %}
     {{ super() }}
+    <style>
+      .guest-list-table {
+        margin-left: auto;
+        margin-right: auto;
+      }
+    </style>
 {% endblock head %}
 
 {% block header %}
@@ -13,7 +19,7 @@ Guest List
 {% endblock title %}
 
 {% block content %}
-  <table class="mdl-data-table mdl-js-data-table">
+  <table class="mdl-data-table mdl-js-data-table guest-list-table">
     <thead>
       <tr>
         <th>ID</th>

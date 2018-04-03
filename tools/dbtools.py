@@ -27,7 +27,7 @@ def generate_load_guest_table_script(guestFilePath):
 
 def generate_load_response_table_script():
 	reherarsalDinnerEvent = "Rehearsal Dinner"
-	rehearsalDinnerResponses = ["Peppercorn Crusted Beef", "Chicken Marsala", "Salmon Florentine", "Pasta Primavera (v)", "Can\\'t attend"]
+	rehearsalDinnerResponses = ["Peppercorn Crusted Beef", "Chicken Marsala", "Salmon", "Pasta Primavera (v)", "Can\\'t attend"]
 	rehearsalDinnerDate = "Fri Aug 10, 6-8pm"
 
 	welcomeReceptionEvent = "Welcome Reception"
@@ -68,7 +68,7 @@ def generate_load_response_table_script():
 		queryString = queryPrefix
 		queryString += "'" + sundayBrunchEvent + "', "
 		queryString += "E'" + response + "', "
-		queryString += "'" + weddingReceptionDate + "');"
+		queryString += "'" + sundayBrunchDate + "');"
 		print(queryString)
 
 
